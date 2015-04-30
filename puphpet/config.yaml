@@ -1,0 +1,237 @@
+vagrantfile:
+    target: local
+    vm:
+        box: puphpet/ubuntu1404-x64
+        box_url: puphpet/ubuntu1404-x64
+        hostname: intern-dev.local
+        memory: '512'
+        cpus: '1'
+        chosen_provider: virtualbox
+        network:
+            private_network: 192.168.56.101
+            forwarded_port:
+                vflnp_0hhwl4mi7qku:
+                    host: '8417'
+                    guest: '22'
+        post_up_message: ''
+        provider:
+            virtualbox:
+                modifyvm:
+                    natdnshostresolver1: on
+            vmware:
+                numvcpus: 1
+            parallels:
+                cpus: 1
+        provision:
+            puppet:
+                manifests_path: puphpet/puppet
+                manifest_file: site.pp
+                module_path: puphpet/puppet/modules
+                options:
+                    - '--verbose'
+                    - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
+                    - '--parser future'
+        synced_folder:
+            vflsf_0iohvmtru3pd:
+                source: ./html/
+                target: /var/www/html
+                sync_type: nfs
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
+                owner: www-data
+                group: www-data
+        usable_port_range:
+            start: 10200
+            stop: 10500
+    ssh:
+        host: null
+        port: null
+        private_key_path: null
+        username: vagrant
+        guest_port: null
+        keep_alive: true
+        forward_agent: false
+        forward_x11: false
+        shell: 'bash -l'
+    vagrant:
+        host: detect
+server:
+    install: '1'
+    packages:
+        - imagemagick
+users_groups:
+    install: '1'
+    groups: {  }
+    users: {  }
+firewall:
+    install: '0'
+    rules: {  }
+cron:
+    install: '1'
+    jobs: {  }
+nginx:
+    install: '0'
+apache:
+    install: '1'
+    settings:
+        user: www-data
+        group: www-data
+        default_vhost: true
+        manage_user: false
+        manage_group: false
+        sendfile: 0
+    modules:
+        - proxy_fcgi
+        - rewrite
+        - deflate
+    vhosts:
+        av_dauyk3u4tath:
+            servername: intern-dev.local
+            docroot: /var/www/html
+            port: '80'
+            setenv:
+                - 'APP_ENV dev'
+            custom_fragment: ''
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
+            directories:
+                avd_ng13h46nu87d:
+                    path: /var/www/html
+                    options:
+                        - Indexes
+                        - FollowSymlinks
+                        - MultiViews
+                    allow_override:
+                        - All
+                    require:
+                        - 'all granted'
+                    custom_fragment: ''
+                    files_match:
+                        avdfm_xsn0cyh9w023:
+                            path: \.php$
+                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
+                            custom_fragment: ''
+                            provider: filesmatch
+                    provider: directory
+php:
+    install: '1'
+    settings:
+        version: '56'
+    modules:
+        php:
+            - cli
+            - intl
+            - mcrypt
+            - mysql
+            - curl
+            - gd
+        pear: {  }
+        pecl:
+            - pecl_http
+    ini:
+        display_errors: On
+        error_reporting: '-1'
+        session.save_path: /var/lib/php/session
+        date.timezone: UTC
+        memory_limit: '256M'
+        upload_max_filesize: '100M'
+        max_execution_time: '240'
+        post_max_size: '100M'
+    fpm_ini:
+        error_log: /var/log/php-fpm.log
+    fpm_pools:
+        phpfp_laj505msjm8g:
+            ini:
+                prefix: www
+                listen: '127.0.0.1:9000'
+                security.limit_extensions: .php
+                user: www-user
+                group: www-data
+    composer: '1'
+    composer_home: ''
+xdebug:
+    install: '1'
+    settings:
+        xdebug.default_enable: '1'
+        xdebug.remote_autostart: '0'
+        xdebug.remote_connect_back: '1'
+        xdebug.remote_enable: '1'
+        xdebug.remote_handler: dbgp
+        xdebug.remote_port: '9000'
+        xdebug.max_nesting_level: '400'
+blackfire:
+    install: '0'
+xhprof:
+    install: '0'
+wpcli:
+    install: '0'
+drush:
+    install: '0'
+ruby:
+    install: '1'
+    versions: {  }
+python:
+    install: '1'
+    packages: {  }
+    versions: {  }
+nodejs:
+    install: '0'
+hhvm:
+    install: '0'
+mysql:
+    install: '1'
+    settings:
+        version: '5.6'
+        root_password: 12345678
+        override_options: {  }
+    adminer: 0
+    users:
+        mysqlnu_82hj8njht3kz:
+            name: t3user
+            password: 12345678
+    databases:
+        mysqlnd_evv666ce3tb6:
+            name: t3db
+            sql: ''
+    grants:
+        mysqlng_jyn0s02hbpjs:
+            user: t3user
+            table: 't3db.*'
+            privileges:
+                - ALL
+postgresql:
+    install: '0'
+mongodb:
+    install: '0'
+    settings:
+redis:
+    install: '0'
+sqlite:
+    install: '0'
+mailcatcher:
+    install: '1'
+    settings:
+        smtp_ip: 0.0.0.0
+        smtp_port: 1025
+        http_ip: 0.0.0.0
+        http_port: '1080'
+        mailcatcher_path: /usr/local/rvm/wrappers/default
+        from_email_method: inline
+beanstalkd:
+    install: '0'
+rabbitmq:
+    install: '0'
+elastic_search:
+    install: '0'
+solr:
+    install: '0'
+
