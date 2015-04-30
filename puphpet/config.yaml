@@ -35,16 +35,7 @@ vagrantfile:
             vflsf_0iohvmtru3pd:
                 source: ./html/
                 target: /var/www/html
-                sync_type: nfs
-                rsync:
-                    args:
-                        - '--verbose'
-                        - '--archive'
-                        - '-z'
-                    exclude:
-                        - .vagrant/
-                        - .git/
-                    auto: 'true'
+                sync_type: default
                 owner: www-data
                 group: www-data
         usable_port_range:
