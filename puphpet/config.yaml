@@ -66,6 +66,7 @@ server:
     install: '1'
     packages:
         - imagemagick
+        - samba
 users_groups:
     install: '1'
     groups: {  }
@@ -234,4 +235,3 @@ elastic_search:
     install: '0'
 solr:
     install: '0'
-
