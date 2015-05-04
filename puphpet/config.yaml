@@ -129,14 +129,14 @@ php:
         pecl:
             - pecl_http
     ini:
-        display_errors: On
+        display_errors: 'On'
         error_reporting: '-1'
-        session.save_path: /var/lib/php/session
-        date.timezone: UTC
         memory_limit: '256M'
         upload_max_filesize: '100M'
         max_execution_time: '240'
         post_max_size: '100M'
+        date.timezone: 'Europe/Berlin'
+        session.save_path: '/var/lib/php/session'
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
