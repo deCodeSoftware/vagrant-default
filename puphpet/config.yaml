@@ -35,7 +35,7 @@ vagrantfile:
             vflsf_0iohvmtru3pd:
                 source: ./html/
                 target: /var/www/html
-                sync_type: default
+                sync_type: nfs
                 owner: www-data
                 group: www-data
         usable_port_range:
