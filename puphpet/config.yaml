@@ -4,8 +4,8 @@ vagrantfile:
         box: puphpet/ubuntu1404-x64
         box_url: puphpet/ubuntu1404-x64
         hostname: intern-dev.local
-        memory: '512'
-        cpus: '1'
+        memory: '1024'
+        cpus: '2'
         chosen_provider: virtualbox
         network:
             private_network: 192.168.56.101
@@ -183,7 +183,9 @@ mysql:
     settings:
         version: '5.6'
         root_password: decode
-        override_options: {  }
+        override_options:
+            mysqld:
+                sql_mode: 'MYSQL40'
     adminer: 0
     users:
         mysqlnu_82hj8njht3kz:
